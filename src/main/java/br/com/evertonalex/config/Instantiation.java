@@ -2,6 +2,7 @@ package br.com.evertonalex.config;
 
 import br.com.evertonalex.domain.Post;
 import br.com.evertonalex.domain.User;
+import br.com.evertonalex.dto.AuthorDTO;
 import br.com.evertonalex.repository.PostRepository;
 import br.com.evertonalex.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,17 @@ public class Instantiation implements CommandLineRunner{
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         userRepository.deleteAll();
-        userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "partiu viagem", "Vou viajar para Sao Paulo, abraços!", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei Feliz hoje!", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "partiu viagem", "Vou viajar para Sao Paulo, abraços!", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei Feliz hoje!", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
